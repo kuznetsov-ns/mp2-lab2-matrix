@@ -245,33 +245,68 @@ TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt):
 
 template <class ValType> // конструктор преобразования типа
 TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
-  TVector<TVector<ValType> >(mt) {}
+	TVector<TVector<ValType> >(mt)
+{
+	Size = mt.Size;
+	StartIndex = mt.StartIndex;
+	pVector = new TVector<ValType>[mt.Size];
+	for (int i = 0; i < mt.Size; i++)
+		pVector[i] = mt.pVector[i];
+}
 
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
 {
+	if (Size != mt.Size) return 0;
+	for (int i = 0; i < Size; i++)
+		if (pVector[i] != mt.pVector[i])
+			return 0;
+	return 1;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
 {
+	if (Size != mt.Size) return 1;
+	for (int i = 0; i < Size; i++)
+		if (pVector[i] != mt.pVector[i])
+			return 1;
+	return 0;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // присваивание
 TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 {
+	if (this == &mt) return *this;
+	if (Size != mt.Size)
+	{
+		delete[] pVector;
+		pVector = new TVector<ValType>[mt.Size];
+	}
+	Size = mt.Size;
+	for (int i = 0; i < Size; i++)
+		pVector[i] = mt.pVector[i];
 	return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-	return *this;
+	if (Size != mt.Size) throw "Incorrect";
+	TMatrix<ValType> tmp(*this);
+	for (int i = 0; i < Size; i++)
+		tmp.pVector[i] = tmp.pVector[i] + mt.pVector[i];
+	return tmp;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
+	if (Size != mt.Size) throw "Incorrect";
+	TMatrix<ValType> tmp(*this);
+	for (int i = 0; i < Size; i++)
+		tmp.pVector[i] = tmp.pVector[i] - mt.pVector[i];
+	return tmp;
 } /*-------------------------------------------------------------------------*/
 
 // TVector О3 Л2 П4 С6
