@@ -70,50 +70,78 @@ TEST(TMatrix, can_assign_matrix_to_itself)
 
 TEST(TMatrix, can_assign_matrices_of_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(3), v2(3);
+	v1[0][1] = 10;
+	v2 = v1;
+	EXPECT_EQ(v1, v2);
 }
 
 TEST(TMatrix, assign_operator_change_matrix_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(4), v2(10);
+	v2 = v1;
+	EXPECT_EQ(v1.GetSize(), v2.GetSize());
 }
 
 TEST(TMatrix, can_assign_matrices_of_different_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(4), v2(10);
+	v1[0][1] = 10;
+	v2 = v1;
+	EXPECT_EQ(v1, v2);
 }
 
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(4), v2(4);
+	v1[0][1] = 10;
+	v2 = v1;
+	EXPECT_EQ(true, v1 == v2);
 }
 
 TEST(TMatrix, compare_matrix_with_itself_return_true)
 {
-  ADD_FAILURE();
+	TMatrix<int> v(4);
+	v[0][3] = 10;
+	EXPECT_EQ(true, v == v);
 }
 
 TEST(TMatrix, matrices_with_different_size_are_not_equal)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(4), v2(6);
+	EXPECT_NE(v1, v2);
 }
 
 TEST(TMatrix, can_add_matrices_with_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(4), v2(4), res(4);
+	v1[1][1] = 5;
+	v2[1][2] = 7;
+	res[1][1] = 5;
+	res[1][2] = 7;
+	EXPECT_EQ(res, v1 + v2);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(4), v2(6);
+	ASSERT_ANY_THROW(v1 + v2);
 }
 
 TEST(TMatrix, can_subtract_matrices_with_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(4), v2(4), res(4);
+	v1[1][1] = 5;
+	v2[1][1] = 3;
+	v1[1][2] = 2;
+	v2[1][2] = 7;
+	res[1][1] = 2;
+	res[1][2] = -5;
+	EXPECT_EQ(res, v1 - v2);
 }
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> v1(4), v2(6);
+	ASSERT_ANY_THROW(v1 - v2);
 }
