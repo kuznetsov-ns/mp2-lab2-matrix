@@ -9,6 +9,7 @@
 #define __TMATRIX_H__
 
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -53,8 +54,10 @@ public:
   }
   friend ostream& operator<<(ostream &out, const TVector &v)
   {
-    for (int i = 0; i < v.Size; i++)
-      out << v.pVector[i] << ' ';
+	  for (int i = 0; i < v.StartIndex; i++)
+		  out << 0 << ' ';
+	  for (int i = 0; i < v.Size; i++)
+		  out << v.pVector[i] << ' ';
     return out;
   }
 };
